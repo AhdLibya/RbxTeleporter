@@ -2,7 +2,7 @@
 local Players             = game:GetService("Players")
 local RBXTeleprotSrvices  = game:GetService("TeleportService")
 
-local Packages = script.Parent.Packages
+local Packages = script.Parent.ThirdParty
 
 local Promise = require(Packages.Promise)
 

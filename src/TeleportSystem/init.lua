@@ -14,7 +14,7 @@ local HttpService         = game:GetService("HttpService")
 local DataStoreService    = game:GetService("DataStoreService")
 local RBXTeleprotSrvices  = game:GetService("TeleportService")
 
-local Packages = script.Packages
+local Packages = script.ThirdParty
 
 
 local Promise  = require(Packages.Promise)
