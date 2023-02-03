@@ -1,0 +1,14 @@
+{
+  "name": "Shinobi World",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "RbxTeleporter": {
+        "$className": "Folder",
+        "$path": "src"
+      }
+    }
+  }
+}
