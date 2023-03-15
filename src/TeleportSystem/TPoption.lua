@@ -22,6 +22,10 @@ export type option = {
 
 local HttpService = game:GetService("HttpService")
 
+--[==[
+@within class option
+]==]
+
 local option = {} :: option
 option.__index = option
 

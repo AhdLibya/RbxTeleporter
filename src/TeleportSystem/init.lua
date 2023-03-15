@@ -1,9 +1,9 @@
---[[
+--[==[
+@AhdLibya
 
 
 
-
-]]
+]==]
 
 
 export type AccessCode = {
@@ -168,6 +168,12 @@ function TeleportSystem:GenerateCode(PlaceId : number) : AccessCode
     return {AccessCode = Code , ServerId = id}
 end
 
+--[==[
+    @return Promise<string> \
+    Create an `Access Code` For Custom Private Servers You Can Store it in your External DataStore \
+    which is a SubString from `game.jobId` 
+
+]==]
 function TeleportSystem:RegisterAccessCode(Player: Player , PlaceId: number , wipeOldServer: boolean?)
     -- First)
     if wipeOldServer and self:PlayerOwnsAccessCode(Player) then
@@ -190,7 +196,7 @@ function TeleportSystem:RegisterAccessCode(Player: Player , PlaceId: number , wi
         AccessCode = newAccessCode.AccessCode;
         ServerId   = newAccessCode.ServerId;
     }):await()
-    return accessCode
+    return Promise.resolve( accessCode )
 end
 
 --[[
