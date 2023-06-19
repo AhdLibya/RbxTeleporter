@@ -215,7 +215,7 @@ function TeleportSystem:PlayerOwnsAccessCode(Player : Player)
 end
 
 function TeleportSystem.newOption()
-    return option.new()
+    return option()
 end
 
 function TeleportSystem:TeleportAsync(_option : option.option)
@@ -229,10 +229,8 @@ function TeleportSystem:TeleportAsync(_option : option.option)
         
         _option:removePrameter()
         :setPrameter(result.PlaceId ,result.AccessCode)
-        return Teleport(_option)
-    else
-        return Teleport(_option)
     end
+    return Teleport(_option)
 end
 
 return TeleportSystem

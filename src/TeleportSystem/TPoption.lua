@@ -5,6 +5,11 @@ export type optionInfo = {
     tp_Data: {};
     PlaceId: number;
 }
+--[=[
+    @type option
+    .ID string
+    setPrameter: (...any) -> option;
+]=]
 export type option = {
     ID: string;
     type: string;
@@ -22,27 +27,7 @@ export type option = {
 
 local HttpService = game:GetService("HttpService")
 
---[==[
-@within class option
-]==]
-
-local option = {} :: option
-option.__index = option
-
-
-function option.new() 
-    local guid = HttpService:GenerateGUID(false);
-    local self = {
-        args = {};
-        ID = guid;
-        type = "";
-        Players = {};
-        ExtraInfo = {};
-    }::option
-    return setmetatable(self , option)
-end
-
-function option:setPrameter(...)
+local function setPrameter(self: option , ...:any)
     local args = {...}
     for _ , v in args do
         self.args[#self.args+1] = v
@@ -50,13 +35,17 @@ function option:setPrameter(...)
     return self
 end
 
-function option:getPrameter()
+local function getPrameter(self: option)
     return table.unpack( self.args )
 end
 
-function option:AddPlayer( Players: Player | {Player})
+local function addPlayer( self: option , Players: Player | {Player})
     if typeof(Players) == "table" then
-        self.Players = Players :: {Player}
+        for _, player: Player in Players do
+            if typeof(player) ~= "Instance" then continue end
+            if not player:IsA("Player") then continue end
+            self.Players[#self.Players+1] = player
+        end
     elseif typeof(Players) == "Instance" and Players:IsDescendantOf(game.Players) then
         self.Players[#self.Players+1] = Players
     else
@@ -65,25 +54,43 @@ function option:AddPlayer( Players: Player | {Player})
     return self
 end
 
-function option:setExtraInfo(Info: optionInfo)
+local function setExtraInfo(self: option , Info: optionInfo)
     for key , value in Info do
         self.ExtraInfo[key] = value
     end
     return self
 end
 
-function option:removePrameter()
+local function removePrameter(self: option)
     table.clear(self.args)
     return self
 end
 
-function option:setType(_type: string)
+local function setType(self: option ,_type: string)
     self.type = _type
     return self
 end
 
-function option:Destroy()
+local function Destroy(self)
     table.clear(self)
 end
 
-return option
+local function new()
+    local guid = HttpService:GenerateGUID(false);
+    return {
+        setPrameter     = setPrameter;
+        getPrameter     = getPrameter;
+        addPlayer       = addPlayer;
+        setExtraInfo    = setExtraInfo;
+        removePrameter  = removePrameter;
+        setType         = setType;
+        Destroy         = Destroy;
+        args            = {};
+        ID              = guid;
+        type            = "";
+        Players         = {};
+        ExtraInfo       = {};
+    } :: option
+end
+
+return new

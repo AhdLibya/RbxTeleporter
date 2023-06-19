@@ -8,6 +8,10 @@
       "RbxTeleporter": {
         "$className": "Folder",
         "$path": "src"
+      },
+      "Test": {
+        "$className": "Folder",
+        "$path": "test"
       }
     }
   }
